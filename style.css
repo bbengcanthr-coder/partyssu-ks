@@ -1,9 +1,23 @@
 body {
     background-color: #333;
+    font-family: Arial, sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 650px; /* จำกัดความกว้างให้ดูดี */
+}
+
+h1 {
+    color: #fff;
+    margin-bottom: 20px;
 }
 
 .input-area {
@@ -12,49 +26,70 @@ body {
     gap: 10px;
 }
 
+input[type="text"], button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button {
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* ------------------------------------------- */
+/* ส่วนสำคัญ: การแสดงผลจดหมาย */
+/* ------------------------------------------- */
+
 #letter-container {
-    /* ขนาดของรูปภาพต้นฉบับ (ตามที่เห็นในไฟล์ College of Aviation.jpg) */
-    width: 600px; /* ปรับขนาดตามความเหมาะสม */
-    height: 800px; /* ปรับขนาดตามความเหมาะสม */
-    background-image: url('ssuks.jpg'); /* ใส่ชื่อไฟล์รูปภาพของคุณ */
+    /* ขนาดตามรูปภาพต้นฉบับที่คุณอัปโหลด */
+    width: 600px; 
+    height: 800px; 
+    background-image: url('ssuks.jpg'); 
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    position: relative; /* สำคัญสำหรับการจัดตำแหน่งข้อความลูก */
-    padding: 0;
-    margin: 0;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    position: relative; /* สำคัญสำหรับการจัดตำแหน่งชื่อ */
+    margin-bottom: 20px;
 }
 
-/* การจัดรูปแบบข้อความและตำแหน่งเพื่อให้ตรงกับรูปภาพ */
-/* **ปรับค่า top และ left ให้ตรงกับตำแหน่งที่คุณต้องการบนรูปภาพ** */
-.dear-line {
+.guest-name-placement {
+    /* 1. จัดตำแหน่ง: ต้องปรับจูนค่า top และ left ให้ชื่อปรากฏต่อจากคำว่า "Dear." ในภาพ */
     position: absolute;
-    top: 300px; /* ปรับให้ตรงกับคำว่า Dear. */
-    left: 100px; /* ปรับให้ตรงกับคำว่า Dear. */
-    margin: 0;
-    font-size: 32px; /* ขนาดฟอนต์สำหรับ Dear. */
-    color: #000;
-    /* ฟอนต์ที่ใกล้เคียงหรือสำรอง */
-    font-family: 'Georgia', 'Times New Roman', serif; 
+    top: 300px; /* ทดสอบค่านี้ให้ตรงกับบรรทัด "Dear." */
+    left: 170px; /* ทดสอบค่านี้ให้เริ่มต่อจากคำว่า "Dear." */
+    
+    /* 2. จัดสไตล์: ให้กลมกลืนกับข้อความเดิม */
+    font-size: 32px; /* ขนาดตัวอักษรเท่ากัน */
+    color: #000; /* สีดำ (ตามข้อความเดิม) */
+    
+    /* 3. ฟอนต์: Times New Roman เป็นฟอนต์ Serif ที่ใกล้เคียง */
+    /* ถ้ามีไฟล์ Georgia Pro Condensed ให้แทนที่ด้วย font-family: 'Georgia Pro Condensed', serif; */
+    font-family: 'Times New Roman', serif; 
     font-weight: normal; 
+    
+    /* 4. ตั้งค่าเริ่มต้นให้ซ่อนไว้ก่อน */
+    opacity: 0;
+    transition: opacity 0.5s;
+    white-space: nowrap; /* ป้องกันชื่อยาวๆ ขึ้นบรรทัดใหม่ */
 }
 
-#guestName {
-    /* นี่คือส่วนที่จะใส่ชื่อผู้ใช้เข้าไป */
-    /* ถ้าต้องการฟอนต์ Georgia Pro Condensed ต้องนำมาฝังด้วย @font-face */
-    font-family: 'Georgia', 'Times New Roman', serif;
-    font-weight: 600; /* ให้ชื่อดูเด่นขึ้น */
-    /* สำหรับ Georgia Pro Condensed: font-family: 'Georgia Pro Condensed', serif; */
+/* เมื่อชื่อถูกกรอกแล้วให้แสดงชื่อ */
+.guest-name-placement.show {
+    opacity: 1;
 }
 
-/* **สำหรับข้อความอื่นๆ ในจดหมายที่ควรจะอยู่ด้านบนภาพ** */
-/* คุณสามารถตัดข้อความอื่นออกแล้วเหลือแค่ Dear. เพื่อลดความซับซ้อน หรือจัดตำแหน่งทับไปเลย */
-/* ถ้าต้องการใส่ข้อความที่เหลือทั้งหมดทับบนภาพพื้นหลัง ให้กำหนดตำแหน่งและรูปแบบคล้าย Dear. */
-.date-line, .time-line, .invitation-line, .location-line {
-    position: absolute;
-    /*... กำหนด top, left, font-size ของแต่ละบรรทัด... */
-    display: none; /* ซ่อนข้อความเหล่านี้เพื่อเน้นแค่ Dear. และชื่อ, เพราะมีอยู่ในภาพแล้ว */
+.download-btn {
+    background-color: #007bff;
 }
 
-/* เพื่อให้ดาวน์โหลดได้ง่าย เราจะให้ Dear. และชื่ออยู่ทับบนภาพพื้นหลัง */
+.download-btn:hover {
+    background-color: #0056b3;
+}
