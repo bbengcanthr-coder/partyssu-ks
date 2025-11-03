@@ -7,7 +7,7 @@ function updateName() {
     if (nameInput.trim() !== "") {
         // อัปเดตชื่อผู้ใช้
         guestNameSpan.textContent = nameInput;
-        // แสดงชื่อ (ใช้ class 'show' เพื่อให้ชื่อปรากฏแบบมี transition)
+        // แสดงชื่อ (ใช้ class 'show' เพื่อให้ชื่อปรากฏ)
         guestNameSpan.classList.add('show');
         downloadButton.style.display = 'block';
     } else {
@@ -30,7 +30,7 @@ function downloadImage() {
     }
 
     // ใช้ html2canvas แปลง div (#letter-container) เป็น canvas
-    // นี่คือส่วนสำคัญที่ทำให้ชื่อ "เข้าไปอยู่ในภาพ" ที่ดาวน์โหลด
+    // องค์ประกอบทั้งหมดใน #letter-container รวมถึงภาพพื้นหลังและชื่อที่วางทับ จะถูกรวมเป็นภาพเดียว
     html2canvas(letterContainer, {
         allowTaint: true, 
         useCORS: true, 
@@ -38,7 +38,7 @@ function downloadImage() {
         // ตรวจสอบให้แน่ใจว่าภาพพื้นหลัง (College of Aviation.jpg) ถูกโหลดสมบูรณ์
     }).then(canvas => {
         // แปลง canvas เป็น URL รูปภาพ JPEG 
-        const imageURL = canvas.toDataURL('image/jpeg', 0.95); // 0.95 คือคุณภาพของภาพ
+        const imageURL = canvas.toDataURL('image/jpeg', 0.95); 
         
         // สร้างลิงก์และสั่งดาวน์โหลด
         const link = document.createElement('a');
