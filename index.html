@@ -6,26 +6,35 @@
     <title>College of Aviation Invitation Generator</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Times+New+Roman&display=swap');
+    </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>สร้างบัตรเชิญเฉพาะคุณ</h1>
-        
-        <div class="input-area">
+    <div class="main-wrapper">
+        <header>
+            <h1>✈️ ตัวสร้างจดหมายเชิญการบิน</h1>
+        </header>
+
+        <div class="control-panel">
             <input type="text" id="nameInput" placeholder="กรอกชื่อผู้รับเชิญ (เช่น Jane Doe)" maxlength="40">
-            <button onclick="updateName()">ยืนยันชื่อ</button>
+            <button onclick="updateName()">ยืนยันและแสดงชื่อ</button>
         </div>
         
-        <div id="letter-container">
+        <div id="letter-container" class="letter-display-area">
             <span id="guestName" class="guest-name-placement"></span> 
         </div>
 
         <button onclick="downloadImage()" id="downloadButton" class="download-btn" style="display: none;">
-            💾 ดาวน์โหลดจดหมายของคุณ
+            ✅ ดาวน์โหลดจดหมายฉบับสมบูรณ์ (.jpg)
         </button>
-
     </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
 
     <script src="script.js"></script>
 </body>
