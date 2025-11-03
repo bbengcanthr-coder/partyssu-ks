@@ -1,45 +1,183 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>College of Aviation Invitation Generator</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Times+New+Roman&display=swap');
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Interactive Letter — GitHub Pages</title>
+  <style>
+    /* NOTE: Put your Georgia Pro Condensed font file in the same repo and update the src path below.
+       If you don't have Georgia Pro Condensed, it will fall back to Georgia.
+    */
+    @font-face {
+      font-family: 'GeorgiaProCondensedLocal';
+      src: url('./fonts/GeorgiaProCondensed.woff2') format('woff2'),
+           url('./fonts/GeorgiaProCondensed.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root{
+      --canvas-width: 1024px; /* adjust for higher resolution */
+      --canvas-height: 1024px;
+    }
+
+    body{font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:20px; background:#111; color:#eee}
+    .wrap{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 360px;gap:20px}
+
+    /* left: letter preview */
+    .stage{background:#222;padding:24px;border-radius:8px;display:flex;align-items:center;justify-content:center}
+    #letter {
+      position: relative;
+      width: var(--canvas-width);
+      height: var(--canvas-height);
+      background: #fff url('./ssuks.jpg') center/cover no-repeat;
+      box-shadow: 0 8px 30px rgba(0,0,0,.7);
+      overflow: hidden;
+      transform-origin: top left;
+    }
+
+    /* the overlayed name (the "Dear" area) */
+    #nameLayer{
+      position: absolute;
+      top: 150px; /* tweak this to match the Dear. position on your image */
+      left: 120px; /* tweak */
+      width: 780px; /* safe width */
+      pointer-events: none; /* disable direct editing; we control via input */
+      white-space: nowrap;
+      overflow: visible;
+    }
+
+    #nameText{
+      font-family: 'GeorgiaProCondensedLocal', Georgia, 'Times New Roman', serif;
+      font-size: 56px; /* default size; user can change */
+      line-height: 1;
+      letter-spacing: 0.5px;
+      color:#111;
+      text-shadow: none;
+    }
+
+    /* controls on the right */
+    .controls{background:#1a1a1a;padding:18px;border-radius:8px}
+    .controls h2{margin:0 0 12px 0;font-size:18px}
+    .controls label{display:block;margin:10px 0 6px;color:#ddd;font-size:13px}
+    .controls input[type=text]{width:100%;padding:8px;border-radius:6px;border:1px solid #333;background:#0f0f0f;color:#fff}
+    .controls input[type=range]{width:100%}
+    .controls button{margin-top:12px;padding:10px 12px;border-radius:8px;border:none;background:#2563eb;color:white;cursor:pointer}
+    .small{font-size:12px;color:#999;margin-top:8px}
+
+    footer{grid-column:1/-1;margin-top:12px;color:#bbb;text-align:center}
+
+    @media(max-width:900px){.wrap{grid-template-columns:1fr} .controls{order:2}}
+  </style>
 </head>
 <body>
-
-    <div class="main-container">
-        <header>
-            <h1>จดหมายเชิญพิเศษ</h1>
-        </header>
-        
-        <div class="control-panel">
-            <input type="text" id="nameInput" placeholder="กรอกชื่อผู้รับเชิญ (ตัวพิมพ์ใหญ่จะดูดีกว่า)" maxlength="40">
-            <button onclick="updateName()">ยืนยันและแสดงชื่อ</button>
+  <div class="wrap">
+    <div class="stage">
+      <div id="letter" aria-label="letter preview">
+        <!-- base image is the paper with 'Dear.' text in the image. We overlay the typed name to sit close to it. -->
+        <div id="nameLayer">
+          <div id="nameText">Dear.</div>
         </div>
-        
-        <div id="letter-container" class="letter-preview">
-            <span id="guestName" class="guest-name-placement"></span> 
-        </div>
-
-        <button onclick="downloadImage()" id="downloadButton" class="download-btn" style="display: none;">
-            💾 ดาวน์โหลดจดหมายฉบับสมบูรณ์ (.jpg)
-        </button>
-        
-        <footer>
-            <p>เว็บไซต์นี้สร้างด้วย GitHub Pages และ HTML2Canvas</p>
-        </footer>
+      </div>
     </div>
 
-    <script src="script.js"></script>
-</body>
-</html>
+    <aside class="controls" aria-label="controls">
+      <h2>ปรับข้อความบนจดหมาย</h2>
+      <label for="nameInput">ชื่อที่จะให้แสดง (จะไปแทน Dear.)</label>
+      <input id="nameInput" type="text" placeholder="พิมพ์ชื่อของคุณ เช่น อาทิตย์" value="Dear." />
 
-    <script src="script.js"></script>
+      <label for="sizeRange">ขนาดตัวอักษร: <span id="sizeVal">56</span> px</label>
+      <input id="sizeRange" type="range" min="30" max="160" value="56" />
+
+      <label for="xOffset">ตำแหน่งซ้าย (px)</label>
+      <input id="xOffset" type="range" min="0" max="300" value="120" />
+
+      <label for="yOffset">ตำแหน่งบน (px)</label>
+      <input id="yOffset" type="range" min="0" max="400" value="150" />
+
+      <label for="fontFile">ใช้ฟอนต์ท้องถิ่น (ใส่ชื่อไฟล์ในโฟลเดอร์ /fonts)</label>
+      <div class="small">ถ้าคุณมี Georgia Pro Condensed ให้อัปโหลดไฟล์ .woff2 หรือ .woff ลงในโฟลเดอร์ <code>/fonts</code> แล้วตั้งชื่อเป็น <code>GeorgiaProCondensed.woff2</code></div>
+
+      <button id="downloadBtn">ดาวน์โหลดเป็นรูป (PNG)</button>
+      <div class="small">เคล็ดลับ: ปรับขนาด ภายใน และตำแหน่ง ให้ตรงกับคำว่า "Dear." ในภาพก่อนดาวน์โหลด</div>
+    </aside>
+
+    <footer>นำไฟล์ทั้งหมด (ไฟล์ .html, ssuks.jpg และโฟลเดอร์ /fonts) ขึ้น GitHub แล้วเปิดด้วย GitHub Pages เพื่อแชร์</footer>
+  </div>
+
+  <!-- html2canvas CDN; ใช้สำหรับแปลง DOM เป็นรูปภาพ -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script>
+    const nameInput = document.getElementById('nameInput');
+    const nameText = document.getElementById('nameText');
+    const sizeRange = document.getElementById('sizeRange');
+    const sizeVal = document.getElementById('sizeVal');
+    const xOffset = document.getElementById('xOffset');
+    const yOffset = document.getElementById('yOffset');
+    const nameLayer = document.getElementById('nameLayer');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const letter = document.getElementById('letter');
+
+    function updateName(){
+      nameText.textContent = nameInput.value || '';
+    }
+
+    nameInput.addEventListener('input', updateName);
+
+    sizeRange.addEventListener('input', ()=>{
+      const v = sizeRange.value;
+      sizeVal.textContent = v;
+      nameText.style.fontSize = v + 'px';
+    });
+
+    xOffset.addEventListener('input', ()=>{
+      nameLayer.style.left = xOffset.value + 'px';
+    });
+    yOffset.addEventListener('input', ()=>{
+      nameLayer.style.top = yOffset.value + 'px';
+    });
+
+    // download as PNG using html2canvas
+    downloadBtn.addEventListener('click', async ()=>{
+      // temporarily set pointer-events to auto in case we need measurement
+      // scale up the rendering to get higher-resolution images
+      const scale = 2; // multiply output size
+      const opts = {
+        backgroundColor: null,
+        scale,
+        useCORS: true,
+        logging: false,
+        // allowTaint: true,
+      };
+
+      // show a quick visual feedback
+      downloadBtn.disabled = true;
+      downloadBtn.textContent = 'กำลังสร้างรูป...';
+
+      try{
+        const canvas = await html2canvas(letter, opts);
+        const dataUrl = canvas.toDataURL('image/png');
+        const a = document.createElement('a');
+        a.href = dataUrl;
+        a.download = (nameInput.value ? nameInput.value.replace(/\s+/g,'_') : 'letter') + '.png';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }catch(err){
+        console.error(err);
+        alert('เกิดข้อผิดพลาด ทดลองปรับขนาดหรือตำแหน่งก่อนอีกครั้ง');
+      }finally{
+        downloadBtn.disabled = false;
+        downloadBtn.textContent = 'ดาวน์โหลดเป็นรูป (PNG)';
+      }
+    });
+
+    // init
+    updateName();
+    nameLayer.style.left = xOffset.value + 'px';
+    nameLayer.style.top = yOffset.value + 'px';
+    nameText.style.fontSize = sizeRange.value + 'px';
+  </script>
 </body>
 </html>
