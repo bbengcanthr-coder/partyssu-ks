@@ -1,0 +1,60 @@
+body {
+    background-color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.input-area {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+#letter-container {
+    /* ขนาดของรูปภาพต้นฉบับ (ตามที่เห็นในไฟล์ College of Aviation.jpg) */
+    width: 600px; /* ปรับขนาดตามความเหมาะสม */
+    height: 800px; /* ปรับขนาดตามความเหมาะสม */
+    background-image: url('ssuks.jpg'); /* ใส่ชื่อไฟล์รูปภาพของคุณ */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative; /* สำคัญสำหรับการจัดตำแหน่งข้อความลูก */
+    padding: 0;
+    margin: 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* การจัดรูปแบบข้อความและตำแหน่งเพื่อให้ตรงกับรูปภาพ */
+/* **ปรับค่า top และ left ให้ตรงกับตำแหน่งที่คุณต้องการบนรูปภาพ** */
+.dear-line {
+    position: absolute;
+    top: 300px; /* ปรับให้ตรงกับคำว่า Dear. */
+    left: 100px; /* ปรับให้ตรงกับคำว่า Dear. */
+    margin: 0;
+    font-size: 32px; /* ขนาดฟอนต์สำหรับ Dear. */
+    color: #000;
+    /* ฟอนต์ที่ใกล้เคียงหรือสำรอง */
+    font-family: 'Georgia', 'Times New Roman', serif; 
+    font-weight: normal; 
+}
+
+#guestName {
+    /* นี่คือส่วนที่จะใส่ชื่อผู้ใช้เข้าไป */
+    /* ถ้าต้องการฟอนต์ Georgia Pro Condensed ต้องนำมาฝังด้วย @font-face */
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-weight: 600; /* ให้ชื่อดูเด่นขึ้น */
+    /* สำหรับ Georgia Pro Condensed: font-family: 'Georgia Pro Condensed', serif; */
+}
+
+/* **สำหรับข้อความอื่นๆ ในจดหมายที่ควรจะอยู่ด้านบนภาพ** */
+/* คุณสามารถตัดข้อความอื่นออกแล้วเหลือแค่ Dear. เพื่อลดความซับซ้อน หรือจัดตำแหน่งทับไปเลย */
+/* ถ้าต้องการใส่ข้อความที่เหลือทั้งหมดทับบนภาพพื้นหลัง ให้กำหนดตำแหน่งและรูปแบบคล้าย Dear. */
+.date-line, .time-line, .invitation-line, .location-line {
+    position: absolute;
+    /*... กำหนด top, left, font-size ของแต่ละบรรทัด... */
+    display: none; /* ซ่อนข้อความเหล่านี้เพื่อเน้นแค่ Dear. และชื่อ, เพราะมีอยู่ในภาพแล้ว */
+}
+
+/* เพื่อให้ดาวน์โหลดได้ง่าย เราจะให้ Dear. และชื่ออยู่ทับบนภาพพื้นหลัง */
