@@ -3,31 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>College of Aviation Invitation</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-</head>
-<!DOCTYPE html>
-<html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>College of Aviation Invitation</title>
+    <title>College of Aviation Invitation Generator</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </head>
 <body>
 
     <div class="container">
+        <h1>สร้างบัตรเชิญเฉพาะคุณ</h1>
+        
         <div class="input-area">
-            <input type="text" id="nameInput" placeholder="กรอกชื่อของคุณ">
-            <button onclick="updateName()">แสดงชื่อ</button>
-            <button onclick="downloadImage()" id="downloadButton" style="display: none;">ดาวน์โหลดจดหมาย</button>
+            <input type="text" id="nameInput" placeholder="กรอกชื่อผู้รับเชิญ (เช่น Jane Doe)" maxlength="40">
+            <button onclick="updateName()">ยืนยันชื่อ</button>
         </div>
-
-        <div id="letter-container" class="letter-paper">
+        
+        <div id="letter-container">
             <span id="guestName" class="guest-name-placement"></span> 
         </div>
+
+        <button onclick="downloadImage()" id="downloadButton" class="download-btn" style="display: none;">
+            💾 ดาวน์โหลดจดหมายของคุณ
+        </button>
 
     </div>
 
