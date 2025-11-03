@@ -1,95 +1,116 @@
+:root {
+    --primary-color: #007bff;
+    --background-color: #f4f4f9;
+    --dark-color: #333;
+    --paper-width: 600px;
+    --paper-height: 800px;
+}
+
 body {
-    background-color: #333;
+    background-color: var(--background-color);
     font-family: Arial, sans-serif;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
+    justify-content: center;
+    padding: 30px;
 }
 
-.container {
+.main-wrapper {
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    max-width: 650px; /* จำกัดความกว้างให้ดูดี */
 }
 
-h1 {
-    color: #fff;
-    margin-bottom: 20px;
+/* ส่วนหัว */
+header h1 {
+    color: var(--dark-color);
+    font-size: 24px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
 }
 
-.input-area {
-    margin-bottom: 20px;
+/* ส่วนควบคุม */
+.control-panel {
     display: flex;
     gap: 10px;
+    width: 100%;
+    margin-bottom: 20px;
 }
 
-input[type="text"], button {
+input[type="text"] {
+    flex-grow: 1;
     padding: 10px;
-    border: none;
+    border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
 }
 
 button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
     cursor: pointer;
-    background-color: #4CAF50;
+    background-color: var(--primary-color);
     color: white;
     transition: background-color 0.3s;
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #0056b3;
 }
 
 /* ------------------------------------------- */
-/* ส่วนสำคัญ: การแสดงผลจดหมาย */
+/* ส่วนสำคัญ: การแสดงผลจดหมายและการวางชื่อ */
 /* ------------------------------------------- */
 
-#letter-container {
-    /* ขนาดตามรูปภาพต้นฉบับที่คุณอัปโหลด */
-    width: 600px; 
-    height: 800px; 
+.letter-display-area {
+    /* ขนาดตามรูปภาพต้นฉบับ */
+    width: var(--paper-width); 
+    height: var(--paper-height); 
     background-image: url('ssuks.jpg'); 
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    position: relative; /* สำคัญสำหรับการจัดตำแหน่งชื่อ */
-    margin-bottom: 20px;
+    position: relative; /* สำคัญ: เพื่อให้ชื่อวางทับได้ */
+    margin-bottom: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .guest-name-placement {
-    /* 1. จัดตำแหน่ง: ต้องปรับจูนค่า top และ left ให้ชื่อปรากฏต่อจากคำว่า "Dear." ในภาพ */
+    /* 1. จัดตำแหน่ง: **ปรับค่า 300px และ 170px เพื่อให้ชื่ออยู่หลัง "Dear." พอดี** */
     position: absolute;
-    top: 300px; /* ทดสอบค่านี้ให้ตรงกับบรรทัด "Dear." */
-    left: 170px; /* ทดสอบค่านี้ให้เริ่มต่อจากคำว่า "Dear." */
+    top: 300px; 
+    left: 170px; 
     
-    /* 2. จัดสไตล์: ให้กลมกลืนกับข้อความเดิม */
-    font-size: 32px; /* ขนาดตัวอักษรเท่ากัน */
-    color: #000; /* สีดำ (ตามข้อความเดิม) */
+    /* 2. จัดสไตล์: ให้เหมือนกับข้อความเดิม */
+    font-size: 32px; 
+    color: #000; 
     
-    /* 3. ฟอนต์: Times New Roman เป็นฟอนต์ Serif ที่ใกล้เคียง */
-    /* ถ้ามีไฟล์ Georgia Pro Condensed ให้แทนที่ด้วย font-family: 'Georgia Pro Condensed', serif; */
-    font-family: 'Times New Roman', serif; 
+    /* 3. ฟอนต์: Times New Roman ใช้เป็นฟอนต์สำรองที่ใกล้เคียง */
+    font-family: 'Times New Roman', serif; /* หรือ 'Georgia Pro Condensed' ถ้าคุณฝังฟอนต์แล้ว */
     font-weight: normal; 
     
-    /* 4. ตั้งค่าเริ่มต้นให้ซ่อนไว้ก่อน */
+    /* 4. การแสดงผล */
     opacity: 0;
     transition: opacity 0.5s;
-    white-space: nowrap; /* ป้องกันชื่อยาวๆ ขึ้นบรรทัดใหม่ */
+    white-space: nowrap; 
+    max-width: 400px; /* จำกัดความยาวชื่อ */
+    overflow: hidden;
 }
 
-/* เมื่อชื่อถูกกรอกแล้วให้แสดงชื่อ */
 .guest-name-placement.show {
     opacity: 1;
 }
 
 .download-btn {
-    background-color: #007bff;
-}
-
-.download-btn:hover {
-    background-color: #0056b3;
+    background-color: #28a745; /* สีเขียวสำหรับดาวน์โหลด */
+    margin-top: 10px;
+    width: 100%;
 }
