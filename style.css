@@ -93,38 +93,42 @@ footer {
 /* ------------------------------------------- */
 
 .letter-preview {
-    /* ขนาดตามรูปภาพต้นฉบับและเป็น Container ที่จะถูกแปลงเป็นภาพ */
     width: var(--paper-width); 
     height: var(--paper-height); 
-    background-image: url('ssuks.jpg'); 
+    background-image: url('College of Aviation.jpg'); 
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    position: relative; /* สำคัญ: เพื่อให้ชื่อวางทับได้อย่างแม่นยำ */
+    position: relative;
     margin-bottom: 30px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .guest-name-placement {
-    /* **ตำแหน่งที่ปรับจูนใหม่ เพื่อให้อยู่ข้าง Dear. พอดี** */
+    /* *** การปรับจูนขั้นสุดท้าย (Final Tuning) *** */
     position: absolute;
-    top: 180px;   /* เลื่อนขึ้นเล็กน้อย (ใช้ค่านี้เพื่อให้ตรงกับบรรทัด Dear.) */
-    left: 60px;  /* เลื่อนไปทางขวาเล็กน้อย (เพื่อให้ชื่อต่อจาก Dear. และเว้นวรรค) */
     
-    /* สไตล์ตัวอักษร: สีและขนาดตามภาพต้นฉบับ */
-    font-size: 18px; 
+    /* 1. ตำแหน่ง: เลื่อนขึ้นและไปทางขวาเพื่อให้ต่อจาก Dear. */
+    top: 295px;   /* เลื่อนขึ้น (เดิม 298px) เพื่อให้ตรงกลางบรรทัด */
+    left: 175px;  /* เลื่อนไปทางขวาเล็กน้อย (เพื่อให้ต่อจาก Dear. และเว้นวรรค) */
+    
+    /* 2. สไตล์: ลดขนาดและน้ำหนักให้เท่ากับ Dear. */
+    font-size: 28px; /* ลดขนาดฟอนต์ลง (เดิม 30px) */
     color: #000000; 
     
-    /* ฟอนต์: Times New Roman เป็นฟอนต์สำรองที่ใกล้เคียง Georgia Pro Condensed */
-    /* ถ้ามีไฟล์ Georgia Pro Condensed ให้นำมาใช้แทนที่นี่ */
+    /* ฟอนต์: Times New Roman เป็นฟอนต์สำรองที่ดีที่สุดในตอนนี้ */
     font-family: 'Times New Roman', serif; 
-    font-weight: normal; 
+    font-weight: 400; /* ทำให้ฟอนต์บางลง (normal) */
     
     opacity: 0;
     transition: opacity 0.5s;
-    white-space: nowrap; /* ป้องกันชื่อยาวๆ ขึ้นบรรทัดใหม่ */
+    white-space: nowrap; 
 }
 
+/* คลาสที่จะถูกเพิ่มด้วย JavaScript เมื่อชื่อถูกกรอก */
+.guest-name-placement.show {
+    opacity: 1;
+}
 /* คลาสที่จะถูกเพิ่มด้วย JavaScript เมื่อชื่อถูกกรอก */
 .guest-name-placement.show {
     opacity: 1;
