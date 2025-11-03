@@ -1,18 +1,23 @@
 :root {
-    --primary-color: #1a73e8; /* สีฟ้าสดใส */
-    --background-color: #f0f4f8; /* สีพื้นหลังอ่อนโยน */
-    --dark-color: #3c4043;
-    --paper-width: 600px;
-    --paper-height: 800px;
+    /* ตัวแปรสีสำหรับการออกแบบที่สม่ำเสมอ */
+    --primary-color: #1a73e8;       /* สีน้ำเงินหลักสำหรับปุ่ม */
+    --background-color: #f0f4f8;    /* สีพื้นหลังอ่อนโยน */
+    --dark-color: #3c4043;          /* สีข้อความ */
+    --paper-width: 600px;           /* ความกว้างของภาพจดหมาย */
+    --paper-height: 800px;          /* ความสูงของภาพจดหมาย */
 }
 
+/* ------------------------------------------- */
+/* 1. การจัดวางโครงสร้างหลักของหน้าเว็บ (UI Clean-up) */
+/* ------------------------------------------- */
 body {
     background-color: var(--background-color);
     font-family: 'Arial', sans-serif;
     display: flex;
     justify-content: center;
-    padding: 20px;
+    padding: 30px 20px;
     margin: 0;
+    min-height: 100vh;
 }
 
 .main-container {
@@ -20,7 +25,7 @@ body {
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-    max-width: 660px; /* กว้างกว่าจดหมายเล็กน้อย */
+    max-width: 660px; 
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -40,7 +45,7 @@ header h1 {
     display: flex;
     gap: 10px;
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 input[type="text"] {
@@ -49,11 +54,6 @@ input[type="text"] {
     border: 1px solid #c8c8c8;
     border-radius: 6px;
     font-size: 16px;
-    transition: border-color 0.3s;
-}
-input[type="text"]:focus {
-    border-color: var(--primary-color);
-    outline: none;
 }
 
 button {
@@ -71,57 +71,61 @@ button:hover {
     background-color: #145dbf;
 }
 
-/* ------------------------------------------- */
-/* ส่วนสำคัญ: การแสดงผลจดหมายและการวางชื่อ */
-/* ------------------------------------------- */
-
-.letter-preview {
-    /* ขนาดตามรูปภาพต้นฉบับ */
-    width: var(--paper-width); 
-    height: var(--paper-height); 
-    background-image: url('ssuks.jpg'); 
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    position: relative; 
-    margin-bottom: 30px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-}
-
-.guest-name-placement {
-    /* **ค่าที่ปรับจูนแล้ว เพื่อให้ชื่ออยู่ข้าง "Dear." ในภาพ 600x800** */
-    position: absolute;
-    top: 300px;   /* บรรทัดเดียวกับ Dear. */
-    left: 170px;  /* เริ่มเขียนต่อจาก Dear. */
-    
-    /* สไตล์ให้กลมกลืน */
-    font-size: 32px; 
-    color: #000000; /* สีดำ */
-    
-    /* ฟอนต์: Times New Roman เป็นฟอนต์สำรองที่ใกล้เคียง */
-    /* ถ้ามีไฟล์ฟอนต์ Georgia Pro Condensed ให้เปลี่ยน font-family ที่นี่ */
-    font-family: 'Times New Roman', serif; 
-    font-weight: normal; 
-    
-    opacity: 0;
-    transition: opacity 0.5s;
-    white-space: nowrap; 
-}
-
-.guest-name-placement.show {
-    opacity: 1;
-}
-
+/* ปุ่มดาวน์โหลด */
 .download-btn {
-    background-color: #28a745; /* สีเขียวสำหรับดาวน์โหลด */
+    background-color: #28a745; 
     width: 100%;
+    margin-top: 10px;
 }
 .download-btn:hover {
     background-color: #1e7e34;
 }
 
 footer {
-    margin-top: 20px;
+    margin-top: 25px;
     color: #888;
     font-size: 12px;
+}
+
+
+/* ------------------------------------------- */
+/* 2. การแสดงผลจดหมาย (หัวใจหลักของการวางชื่อ) */
+/* ------------------------------------------- */
+
+.letter-preview {
+    /* ขนาดตามรูปภาพต้นฉบับและเป็น Container ที่จะถูกแปลงเป็นภาพ */
+    width: var(--paper-width); 
+    height: var(--paper-height); 
+    background-image: url('ssuks.jpg'); 
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative; /* สำคัญ: เพื่อให้ชื่อวางทับได้อย่างแม่นยำ */
+    margin-bottom: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.guest-name-placement {
+    /* **ตำแหน่งที่ปรับจูนใหม่ เพื่อให้อยู่ข้าง Dear. พอดี** */
+    position: absolute;
+    top: 295px;   /* เลื่อนขึ้นเล็กน้อย (ใช้ค่านี้เพื่อให้ตรงกับบรรทัด Dear.) */
+    left: 175px;  /* เลื่อนไปทางขวาเล็กน้อย (เพื่อให้ชื่อต่อจาก Dear. และเว้นวรรค) */
+    
+    /* สไตล์ตัวอักษร: สีและขนาดตามภาพต้นฉบับ */
+    font-size: 32px; 
+    color: #000000; 
+    
+    /* ฟอนต์: Times New Roman เป็นฟอนต์สำรองที่ใกล้เคียง Georgia Pro Condensed */
+    /* ถ้ามีไฟล์ Georgia Pro Condensed ให้นำมาใช้แทนที่นี่ */
+    font-family: 'Times New Roman', serif; 
+    font-weight: normal; 
+    
+    opacity: 0;
+    transition: opacity 0.5s;
+    white-space: nowrap; /* ป้องกันชื่อยาวๆ ขึ้นบรรทัดใหม่ */
+}
+
+/* คลาสที่จะถูกเพิ่มด้วย JavaScript เมื่อชื่อถูกกรอก */
+.guest-name-placement.show {
+    opacity: 1;
 }
