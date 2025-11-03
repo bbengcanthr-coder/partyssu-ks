@@ -13,23 +13,27 @@
 </head>
 <body>
 
-    <div class="main-wrapper">
+    <div class="main-container">
         <header>
-            <h1>✈️ ตัวสร้างจดหมายเชิญการบิน</h1>
+            <h1>💌 ตัวสร้างจดหมายเชิญพิเศษ</h1>
         </header>
-
+        
         <div class="control-panel">
-            <input type="text" id="nameInput" placeholder="กรอกชื่อผู้รับเชิญ (เช่น Jane Doe)" maxlength="40">
+            <input type="text" id="nameInput" placeholder="กรอกชื่อผู้รับเชิญ (ตัวพิมพ์ใหญ่จะดูดีกว่า)" maxlength="40">
             <button onclick="updateName()">ยืนยันและแสดงชื่อ</button>
         </div>
         
-        <div id="letter-container" class="letter-display-area">
+        <div id="letter-container" class="letter-preview">
             <span id="guestName" class="guest-name-placement"></span> 
         </div>
 
         <button onclick="downloadImage()" id="downloadButton" class="download-btn" style="display: none;">
-            ✅ ดาวน์โหลดจดหมายฉบับสมบูรณ์ (.jpg)
+            💾 ดาวน์โหลดจดหมายฉบับสมบูรณ์ (.jpg)
         </button>
+        
+        <footer>
+            <p>เว็บไซต์นี้สร้างด้วย GitHub Pages และ HTML2Canvas</p>
+        </footer>
     </div>
 
     <script src="script.js"></script>
